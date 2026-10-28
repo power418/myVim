@@ -26,23 +26,19 @@ call plug#begin()
 	Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
+let mapleader = " " 
+
 nmap <c-s> :w<CR>
 nmap <c-q> :q!<CR>
 imap <c-s> <Esc>:w<CR>a
 
 inoremap <C-w> <ESC>
-nnoremap a i
-
-map h <Right>
-map i <Up>
-map j <Left>
-map k <Down>
 
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <Space>e :NERDTreeToggle<CR>
 
-nnoremap <C-f> :Files<CR>
-nnoremap <C-g> :Buffer<CR>
+nnoremap <Space>f :Files<CR>
+nnoremap <Space>g :Buffer<CR>
 
 " let g:python_host_prog = trim('/usr/bin/' . system('readlink /usr/bin/python'))
 " let g:python3_host_prog = trim('/usr/local/bin/' . system('readlink /usr/local/bin/python3'))
@@ -55,10 +51,10 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<Space-e>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<Space-p>" : "\<S-Tab>"
 
-inoremap <expr> <TAB> pumvisible() ? "<C-y>" : "<TAB>"
+inoremap <expr> <TAB> pumvisible() ? "<Space-y>" : "<TAB>"
 inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 let g:airline_theme = "tokyonight"
@@ -121,15 +117,15 @@ omap <C-_> <Plug>Commentary
 syntax on
 set number
 set mouse=a
+set mousemodel=popup_setpos
 set smartindent
 set list lcs=tab:\¦.
 set guicursor+=i:ver25-iCursor
 
+menu PopUp.Copy      "+y
+menu PopUp.Paste     "+gP
+menu PopUp.SelectAll ggVG
+
 filetype plugin indent on
 set ts=4 sts=4 sw=4
-
-if $TERM_PROGRAM =~ "iTerm"
-	let &t_SI = "\<Esc>]50;CursorShape=1\x7" 
-	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
 
