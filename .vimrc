@@ -116,11 +116,24 @@ omap <C-_> <Plug>Commentary
 
 syntax on
 set number
+set relativenumber
 set mouse=a
 set mousemodel=popup_setpos
 set smartindent
-set list lcs=tab:\¦.
+set list lcs=tab:\¦.,leadmultispace:¦...
+augroup auto_dots
+    autocmd!
+    autocmd BufWinEnter,FileType,WinEnter,TabEnter * setlocal list listchars=tab:\¦.,leadmultispace:¦...
+augroup END
 set guicursor+=i:ver25-iCursor
+
+if &term =~ 'xterm' || &term == 'win32'
+    let &t_SI = "\e[5 q"
+    let &t_SR = "\e[3 q"
+    let &t_EI = "\e[1 q"
+    let &t_ti ..= "\e[1 q"
+    let &t_te ..= "\e[0 q"
+endif
 
 menu PopUp.Copy      "+y
 menu PopUp.Paste     "+gP
